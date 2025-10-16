@@ -1,0 +1,47 @@
+{
+  "name": "Medallion-Pipeline-Job",
+  "tasks": [
+    {
+      "task_key": "landing_to_bronze",
+      "notebook_task": {
+        "notebook_path": "src/notebooks/01_landing_to_bronze",
+        "base_parameters": {
+          "catalog": "hive_metastore",
+          "schema": "medallion_demo",
+          "landing_path": "dbfs:/FileStore/medallion_demo/landing",
+          "bronze_path": "dbfs:/FileStore/medallion_demo/bronze"
+        }
+      }
+    },
+    {
+      "task_key": "bronze_to_silver",
+      "depends_on": [
+        {
+          "task_key": "landing_to_bronze"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "src/notebooks/02_bronze_to_silver",
+        "base_parameters": {
+          "catalog": "hive_metastore",
+          "schema": "medallion_demo"
+        }
+      }
+    },
+    {
+      "task_key": "silver_to_gold",
+      "depends_on": [
+        {
+          "task_key": "bronze_to_silver"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "src/notebooks/03_silver_to_gold",
+        "base_parameters": {
+          "catalog": "hive_metastore",
+          "schema": "medallion_demo"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+site_name: Medallion Pipeline — Databricks
+nav:
+  - Overview: index.md
+  - Architecture: architecture.md
+  - Data Dictionary: data_dictionary.md
+  - Runbook: runbook.md
+  - Troubleshooting: troubleshooting.md
+theme:
+  name: material
