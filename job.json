@@ -4,11 +4,11 @@
     {
       "task_key": "landing_to_bronze",
       "notebook_task": {
-        "notebook_path": "src/notebooks/01_landing_to_bronze",
+        "notebook_path": "01_landing_to_bronze",
         "base_parameters": {
-          "catalog": "hive_metastore",
-          "schema": "medallion_demo",
-          "landing_path": "dbfs:/FileStore/medallion_demo/landing",
+          "catalog": "workspace",
+          "schema": "default",
+          "landing_path": "/Volumes/workspace/default/medallion_demo_landing",
           "bronze_path": "dbfs:/FileStore/medallion_demo/bronze"
         }
       }
@@ -21,10 +21,10 @@
         }
       ],
       "notebook_task": {
-        "notebook_path": "src/notebooks/02_bronze_to_silver",
+        "notebook_path": "02_bronze_to_silver",
         "base_parameters": {
-          "catalog": "hive_metastore",
-          "schema": "medallion_demo"
+          "catalog": "workspace",
+          "schema": "default"
         }
       }
     },
@@ -36,10 +36,10 @@
         }
       ],
       "notebook_task": {
-        "notebook_path": "src/notebooks/03_silver_to_gold",
+        "notebook_path": "03_silver_to_gold",
         "base_parameters": {
-          "catalog": "hive_metastore",
-          "schema": "medallion_demo"
+          "catalog": "workspace",
+          "schema": "default"
         }
       }
     }

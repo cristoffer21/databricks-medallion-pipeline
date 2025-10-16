@@ -1,11 +1,12 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # 02 — Bronze ➜ Silver
-# MAGIC Clean and conform data types; split date/time; standardize column names; and enrich joins.
 
 # COMMAND ----------
-catalog = dbutils.widgets.get("catalog") if "catalog" in [w.name for w in dbutils.widgets.get()] else "hive_metastore"
-schema  = dbutils.widgets.get("schema")  if "schema"  in [w.name for w in dbutils.widgets.get()] else "medallion_demo"
+dbutils.widgets.text("catalog","workspace")
+dbutils.widgets.text("schema","default")
+catalog = dbutils.widgets.get("catalog")
+schema  = dbutils.widgets.get("schema")
 
 spark.sql(f"USE {catalog}.{schema}")
 
@@ -68,7 +69,6 @@ sales_enriched = (sales2
                   .withColumn("_process_ts", F.current_timestamp())
                  )
 
-# Write silver tables
 (items2.write.mode("overwrite").format("delta").option("overwriteSchema","true").saveAsTable(f"{catalog}.{schema}.silver__items"))
 (categories2.write.mode("overwrite").format("delta").option("overwriteSchema","true").saveAsTable(f"{catalog}.{schema}.silver__categories"))
 (wholesale2.write.mode("overwrite").format("delta").option("overwriteSchema","true").saveAsTable(f"{catalog}.{schema}.silver__wholesale"))

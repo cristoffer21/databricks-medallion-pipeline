@@ -1,17 +1,6 @@
-# Project configuration for paths and names
-# Adjust these in Databricks (or via job parameters) before running the pipeline.
-catalog: hive_metastore            # or your Unity Catalog, e.g., 'main'
-schema: medallion_demo             # database/schema to create/use
-base_path: dbfs:/FileStore/medallion_demo
-landing_path: dbfs:/FileStore/medallion_demo/landing
+catalog: workspace
+schema: default
+landing_path: /Volumes/workspace/default/medallion_demo_landing
 bronze_path: dbfs:/FileStore/medallion_demo/bronze
 silver_path: dbfs:/FileStore/medallion_demo/silver
 gold_path: dbfs:/FileStore/medallion_demo/gold
-
-# Optional: tweak CSV read options for the landing layer
-csv:
-  header: true
-  inferSchema: true
-  multiline: false
-  sep: ","
-  encoding: "UTF-8"

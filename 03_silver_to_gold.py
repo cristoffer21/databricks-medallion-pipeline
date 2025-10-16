@@ -1,19 +1,18 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # 03 — Silver ➜ Gold
-# MAGIC Produce business-friendly facts and aggregates.
 
 # COMMAND ----------
-catalog = dbutils.widgets.get("catalog") if "catalog" in [w.name for w in dbutils.widgets.get()] else "hive_metastore"
-schema  = dbutils.widgets.get("schema")  if "schema"  in [w.name for w in dbutils.widgets.get()] else "medallion_demo"
+dbutils.widgets.text("catalog","workspace")
+dbutils.widgets.text("schema","default")
+catalog = dbutils.widgets.get("catalog")
+schema  = dbutils.widgets.get("schema")
 
 spark.sql(f"USE {catalog}.{schema}")
 
 from pyspark.sql import functions as F, Window
 
 s = spark.table(f"{catalog}.{schema}.silver__sales_enriched")
-items = spark.table(f"{catalog}.{schema}.silver__items")
-cats = spark.table(f"{catalog}.{schema}.silver__categories")
 
 # Fact: daily sales by item
 fact_daily_item = (s.groupBy("date","item_code","item_name")
